@@ -4,8 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <header>
+        <img src="./public/logo.png" alt="logo" class="logo">
+        <div class="hamburger">
+            <div class="linel1"></div>
+            <div class="linel2"></div>
+            <div class="linel3"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="" class="active">Home</a></li>
+                <li><a href="">Feature</a></li>
+                <li><a href="">About Us</a></li>
+            </ul>
+            <ol>
+                <li><a href="">Login</a></li>
+                <li><a href="">Signup</a></li>
+            </ol>
+        </nav>
+    </header>
+
+    <script>
+        let hamburger = document.querySelector(".hamburger");
+        hamburger.onclick = function (){
+            let hamburger_position = document.querySelector(".hamburger");
+            hamburger_position.classList.toggle("active");
+            let navBar = document.querySelector(".nav-bar");
+            navBar.classList.toggle("active"); 
+            let line1 = document.querySelector(".hamburger .linel1");
+            line1.classList.toggle("active");
+            let line2 = document.querySelector(".hamburger .linel2");
+            line2.classList.toggle("active");
+            let line3 = document.querySelector(".hamburger .linel3");
+            line3.classList.toggle("active");
+            let body = document.querySelector("body");
+            body.classList.toggle("active");
+            let logo = document.querySelector("header .logo");
+            logo.classList.toggle("active");
+        }
+    </script>
+
 </body>
 </html>
