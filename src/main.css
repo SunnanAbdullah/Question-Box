@@ -103,7 +103,13 @@ button:hover{
     /* background-color: aquamarine; */
 }
 
-.feature-container:nth-child(even){
+.feature-wraper{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.feature-wraper:nth-child(odd) .feature-container{
     display: flex;
     flex-direction: row;
     margin: 0 4rem ;
@@ -111,12 +117,28 @@ button:hover{
     
 }
 
-.feature-container:nth-child(odd) {
+.feature-wraper:nth-child(even) .feature-container{
     display: flex;
     flex-direction: row-reverse;
     margin: 0 4rem ;
     justify-content: space-between;
+
 }
+
+/* .feature-container:nth-child(odd){
+    display: flex;
+    flex-direction: row;
+    margin: 0 4rem ;
+    justify-content: space-between;
+    
+}
+
+.feature-container:nth-child(even) {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0 4rem ;
+    justify-content: space-between;
+} */
 
 .feature-text{
     display: flex;
@@ -152,7 +174,7 @@ button:hover{
         margin: 0 4vw;
     }
 
-    .feature-container:nth-child(odd){
+    /* .feature-container:nth-child(odd){
         flex-direction: column;
         margin: 2rem 0;
         align-items: center;
@@ -163,8 +185,23 @@ button:hover{
         margin: 2rem 0;
         align-items: center;
         width: 100%;
-    }
+    } */
     
+    .feature-wraper:nth-child(odd) .feature-container{
+        flex-direction: column;
+        margin: 2rem 0;
+        align-items: center;
+        width: 100%;
+        
+    }
+
+    .feature-wraper:nth-child(even) .feature-container{
+        flex-direction: column;
+        margin: 2rem 0;
+        align-items: center;
+        width: 100%;
+    }
+
     .feature-text{
         width: 80vw;
         margin: 0;
