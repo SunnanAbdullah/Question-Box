@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
     <header>
-        <img src="./public/logo.png" alt="logo" class="logo">
+        <div class="logo-container">
+            <img src="./public/logo.png" alt="logo" class="logo">
+            <span class="mob-tablet-logo-header">Question Box</span>
+        </div>
         <div class="hamburger">
             <div class="linel1"></div>
             <div class="linel2"></div>
@@ -27,6 +31,17 @@
         </nav>
     </header>
 
+    <main>
+        <div class="home">
+            <div class="non-image">
+                <h1 class="header">Question Box</h1>
+                <p class="paragraph">Ditch paperwork, build engaging quizzes in minutes. Track progress, gain insights. Take quizzes anytime, anywhere, get instant feedback. Boost engagement and make assessments dynamic with our user-friendly platform.</p>
+                <button>Let's Explore</button>
+            </div>
+            <img src="./public/logo.png" alt="logo" class="image">
+        </div>
+    </main>
+
     <script>
         let hamburger = document.querySelector(".hamburger");
         hamburger.onclick = function (){
@@ -44,6 +59,8 @@
             body.classList.toggle("active");
             let logo = document.querySelector("header .logo");
             logo.classList.toggle("active");
+            let main = document.querySelector("main");
+            main.classList.toggle("active");
         }
     </script>
 

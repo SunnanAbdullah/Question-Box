@@ -32,6 +32,10 @@ header{
     z-index: 10;
 }
 
+.mob-tablet-logo-header{
+    display: none;
+}
+
 .hamburger{
     display: none;
 }
@@ -85,7 +89,7 @@ header{
 }
 
 
-@media only screen and (max-width: 900px){
+@media only screen and (max-width: 768px){
     
     header{
         justify-content: space-between;
@@ -100,6 +104,18 @@ header{
     header .logo.active{
         visibility: hidden;
     }
+    .logo-container{
+        display: flex;
+        align-items: center;
+    }
+
+    .mob-tablet-logo-header{
+        display: inline;
+        color: #1D1E24;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
     .hamburger{
         display: block;
         cursor: pointer;
@@ -141,7 +157,7 @@ header{
         left: 0;
         right: 0;
         width: 100vw;
-        height: 100vh;
+        height: 0;
         background-color: snow;
         /* transition: 1s ; */
         /* overflow: hidden; */
@@ -164,7 +180,7 @@ header{
         text-align: center;
         /* transition: .5s; */
         opacity: 0;
-        background-color: aqua;
+        /* background-color: aqua; */
     }
     .nav-bar ol {
         display: flex;
@@ -173,7 +189,7 @@ header{
         text-align: center;
         /* transition: .5s; */
         opacity: 0;
-        background-color: aquamarine;
+        /* background-color: aquamarine; */
         flex-direction: row;
     }
 
@@ -186,6 +202,12 @@ header{
     }
 
     .nav-bar ul li a {
+        color: snow;
+        margin-bottom: 12px;
+    }
+    .nav-bar ol li a {
+        background-color: snow;
+        color: #faa31a;
         margin-bottom: 12px;
     }
 }
