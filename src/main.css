@@ -1,3 +1,6 @@
+/*.....................Home...Section.........................................*/
+
+
 main{
     display: flex;
     flex-direction: column;
@@ -83,3 +86,110 @@ button:hover{
         font-size: 4vw;
     }
 }
+
+/*.....................Feature...Section.........................................*/
+.divider{
+    background-color: #faa31a;
+    height: 2px;
+    border: none;
+    border-radius: 20px;
+    margin: 0 4rem;
+}
+
+.feature{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* background-color: aquamarine; */
+}
+
+.feature-container:nth-child(even){
+    display: flex;
+    flex-direction: row;
+    margin: 0 4rem ;
+    justify-content: space-between;
+    
+}
+
+.feature-container:nth-child(odd) {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0 4rem ;
+    justify-content: space-between;
+}
+
+.feature-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 45vw;
+}
+
+.feature-text-header{
+    font-size: 3vw;
+    width: 40vw;
+    font-weight: bold;
+    color: #1D1E24;
+    margin-bottom: 3vw;
+}
+
+.feature-text-body{
+    font-size: 2vw;
+    font-weight: normal;
+    color: #1D1E24;
+    margin-bottom: 1vw;
+    text-align: start;
+}
+
+.feature-image{
+    width: 35vw;
+    filter: drop-shadow(6px 6px 6px #1d1e243d);
+    margin: 4rem;
+}
+
+@media only screen and (max-width: 768px){
+    .divider{
+        margin: 0 4vw;
+    }
+
+    .feature-container:nth-child(odd){
+        flex-direction: column;
+        margin: 2rem 0;
+        align-items: center;
+        width: 100%;
+    }
+    .feature-container:nth-child(even){
+        flex-direction: column;
+        margin: 2rem 0;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .feature-text{
+        width: 80vw;
+        margin: 0;
+    }
+    
+    .feature-text-header{
+        font-size: 3vw;
+        width: 40vw;
+        font-weight: bold;
+        color: #1D1E24;
+        margin-bottom: 3vw;
+    }
+    
+    .feature-text-body{
+        font-size: 2vw;
+        font-weight: normal;
+        color: #1D1E24;
+        margin-bottom: 1vw;
+        text-align: justify;
+        width: 80vw;
+    }
+    .feature-image{
+        width: 50vw;
+        filter: drop-shadow(6px 6px 6px #1d1e243d);
+        margin: 2rem;
+    }
+}
+
