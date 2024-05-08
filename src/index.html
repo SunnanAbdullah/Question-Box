@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="footer.css">
 </head>
 <body>
     <header>
@@ -20,9 +21,9 @@
         </div>
         <nav class="nav-bar">
             <ul>
-                <li><a href="" class="active">Home</a></li>
-                <li><a href="">Feature</a></li>
-                <li><a href="">About Us</a></li>
+                <li><a href="#home" onclick="f()" class="active">Home</a></li>
+                <li><a href="#feature" onclick="f()">Feature</a></li>
+                <li><a href="#about" onclick="f()">About Us</a></li>
             </ul>
             <ol>
                 <li><a href="">Login</a></li>
@@ -32,7 +33,7 @@
     </header>
 
     <main>
-        <div class="home">
+        <div id="home" class="home">
             <div class="non-image">
                 <h1 class="header">Question Box</h1>
                 <p class="paragraph">Ditch paperwork, build engaging quizzes in minutes. Track progress, gain insights. Take quizzes anytime, anywhere, get instant feedback. Boost engagement and make assessments dynamic with our user-friendly platform.</p>
@@ -41,7 +42,7 @@
             <img src="./public/logo.png" alt="logo" class="image">
         </div>
         
-        <section class="feature">
+        <section id="feature" class="feature">
             <div class="feature-wraper">
                 <hr class="divider">
                 <div class="feature-container">
@@ -85,15 +86,48 @@
                     <img src="./public/feedback.png" alt="Responsive" class="feature-image">
                 </div>
             </div>
-                
-            
         </section>
 
+        <hr class="divider">
+        <section id="about" class="about">
+            <div class="bg-about">
+                <h1 class="about-header">WHO ARE WE ?</h1>
+                <p class="about-paragraph">We're a team of passionate educators and tech enthusiasts united by a belief in the power of engaging assessments.  We created this app to revolutionize the way educators teach and students learn.</p>
+                <h1 class="about-header">Ous Mission</h1>
+                <p class="about-paragraph">Our mission is to ignite a passion for learning through engaging, personalized assessments. We empower educators to create dynamic quizzes and students to embrace immediate feedback, fostering a dynamic learning experience that unlocks individual potential.</p>
+            </div>
+        </section>
     </main>
 
+    <footer>
+        <div class="footer-question-box">
+            <img src="./public/logo.png" alt="logo">
+            <div class="footer-question-box-text-wrapper">
+                <h1>Question Box</h1>
+                <p>&copy; Copyright 2024 Question Box. All rights reserved</p>
+            </div>
+        </div>
+        <hr class="footer-divider">
+        <div class="footer-company">
+            <h1>Company</h1>
+            <div>About us</div>
+            <div>Privacy Policy</div>
+            <div>Terms & Conditions of Service</div>
+        </div>
+        <hr class="footer-divider">
+        <div class="footer-contact-us">
+            <h1>Contact Us</h1>
+            <div>Twitter</div>
+            <div>Fackbook</div>
+            <div>questionbox@gmail.com</div>
+        </div>
+    </footer>
+
     <script>
+        let hamburger_state = false;
         let hamburger = document.querySelector(".hamburger");
         hamburger.onclick = function (){
+            hamburger_state = !hamburger_state ;
             let hamburger_position = document.querySelector(".hamburger");
             hamburger_position.classList.toggle("active");
             let navBar = document.querySelector(".nav-bar");
@@ -112,7 +146,41 @@
             main.classList.toggle("active");
             let mob_tablet_logo_header = document.querySelector(".mob-tablet-logo-header");
             mob_tablet_logo_header.classList.toggle("active");
+            let footer_logo = document.querySelector(".footer-question-box img");
+            footer_logo.classList.toggle("active");
+            console.log(hamburger_state);
         }
+        
+        function f (){
+            console.log(` burger state in f : ${hamburger_state}`);
+            console.log("f run");
+            if(hamburger_state){
+                console.log(` burger state in active f : ${hamburger_state}`);
+                console.log("f run and activate");
+                hamburger_state = !hamburger_state ;
+            let hamburger_position = document.querySelector(".hamburger");
+            hamburger_position.classList.toggle("active");
+            let navBar = document.querySelector(".nav-bar");
+            navBar.classList.toggle("active"); 
+            let line1 = document.querySelector(".hamburger .linel1");
+            line1.classList.toggle("active");
+            let line2 = document.querySelector(".hamburger .linel2");
+            line2.classList.toggle("active");
+            let line3 = document.querySelector(".hamburger .linel3");
+            line3.classList.toggle("active");
+            let body = document.querySelector("body");
+            body.classList.toggle("active");
+            let logo = document.querySelector("header .logo");
+            logo.classList.toggle("active");
+            let main = document.querySelector("main");
+            main.classList.toggle("active");
+            let mob_tablet_logo_header = document.querySelector(".mob-tablet-logo-header");
+            mob_tablet_logo_header.classList.toggle("active");
+            let footer_logo = document.querySelector(".footer-question-box img");
+            footer_logo.classList.toggle("active");
+            }
+        }
+        
     </script>
 </body>
 </html>

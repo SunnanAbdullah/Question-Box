@@ -6,6 +6,7 @@
     box-sizing: border-box;
     font-family: sans-serif;
     color: #1D1E24;
+    scroll-behavior: smooth;
 }
 
 
@@ -155,7 +156,7 @@ header{
         background-color: snow;
     }
     .nav-bar{
-        /* display: none; */
+        display: none;
         position: absolute;
         top: 80px;
         left: 0;
@@ -169,6 +170,7 @@ header{
 
 
     .nav-bar.active{
+        display: flex;
         flex-direction: column;
         height: 100vh;
         /* background-color: #faa31a; */
