@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="../../public/logo.png" alt="logo" class="logo">
+            <span class="mob-tablet-logo-header">Question Box</span>
+        </div>
+        <div class="hamburger">
+            <div class="linel1"></div>
+            <div class="linel2"></div>
+            <div class="linel3"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="#home" onclick="f()" class="active">Dashboard</a></li>
+                <li><a href="#feature" onclick="f()">Question Sets</a></li>
+                <li><a href="#about" onclick="f()">Analysis</a></li>
+            </ul>
+            <ol>
+                <li><a href="">Logout</a></li>
+            </ol>
+        </nav>
+    </header>
+
+    <div id="quiz-container" class="quiz-container">
+        <div class="question">
+            
+            <label for="question1">Question 1:</label>
+            <textarea type="text" id="question1" class="questionText" name="question1" placeholder="How you doing ?"></textarea>
+            <div class="options">
+                <div class="option">
+                    <input type="text" class="optiontext" name="option1" placeholder="Option 1">
+                    <button class="remove-option" disabled>-</button>
+                </div>
+                <div class="option">
+                    <input type="text" class="optiontext" name="option2" placeholder="Option 2">
+                    <button class="remove-option" disabled>-</button>
+                </div>
+                <button class="add-option">Add option</button>
+            </div>
+        </div>
+        <!-- <div class="question">
+            
+            <label for="question1">Question 1:</label>
+            <textarea type="text" id="question1" class="questionText" name="question1" placeholder="How you doing ?"></textarea>
+            <div class="options">
+                <div class="option">
+                    <input type="text" class="optiontext" name="option1" placeholder="Option 1">
+                    <button class="remove-option" disabled>-</button>
+                </div>
+                <div class="option">
+                    <input type="text" class="optiontext" name="option2" placeholder="Option 2">
+                    <button class="remove-option" disabled>-</button>
+                </div>
+                <button class="add-option">Add option</button>
+            </div>
+        </div> -->
+    </div>
+    <div class="warper-add-question">
+        <button id="add-question" class="add-question">Add Question</button>
+    </div>
+    <button id="generate-quiz" style="display: none;">Generate Quiz</button>
+
+    <script>
+        const addQuestionBtn = document.getElementById('add-question');
+        const generateQuizBtn = document.getElementById('generate-quiz');
+        const quizContainer = document.getElementById('quiz-container');
+        let questionCounter = 1;
+
+        addQuestionBtn.addEventListener('click', () => {
+            questionCounter++;
+            const newQuestion = document.createElement('div');
+            newQuestion.classList.add('question');
+            newQuestion.innerHTML = `
+            <label for="question${questionCounter}">Question ${questionCounter}:</label>
+            <textarea type="text" id="question${questionCounter}" class="questionText" name="question${questionCounter}" placeholder="How you doing ?"></textarea>
+            <div class="options">
+                <div class="option">
+                    <input type="text" class="optiontext" name="option1" placeholder="Option 1">
+                    <button class="remove-option" disabled>-</button>
+                </div>
+                <div class="option">
+                    <input type="text" class="optiontext" name="option2" placeholder="Option 2">
+                    <button class="remove-option" disabled>-</button>
+                </div>
+                <button class="add-option">Add option</button>
+            </div>
+        `;
+            quizContainer.appendChild(newQuestion);
+        });
+
+        quizContainer.addEventListener('click', (event) => {
+            if (event.target.classList.contains('add-option')) {
+                const optionsContainer = event.target.parentNode;
+                const optionCounter = optionsContainer.querySelectorAll('.option').length + 1;
+                const newOption = document.createElement('div');
+                newOption.classList.add('option');
+                newOption.innerHTML = `
+                <input type="text" class="optiontext" name="option${optionCounter}" placeholder="Option ${optionCounter}">
+                <button class="remove-option">-</button>
+            `;
+                optionsContainer.insertBefore(newOption, event.target);
+                checkOptionButtons(optionsContainer);
+            } else if (event.target.classList.contains('remove-option')) {
+                const optionsContainer = event.target.parentNode.parentNode;
+                event.target.parentNode.remove();
+                checkOptionButtons(optionsContainer);
+            }
+        });
+
+        function checkOptionButtons(optionsContainer) {
+            const optionButtons = optionsContainer.querySelectorAll('.remove-option');
+            optionButtons.forEach(button => {
+                if (optionButtons.length > 2) {
+                    button.removeAttribute('disabled');
+                } else {
+                    button.setAttribute('disabled', 'disabled');
+                }
+            });
+        }
+
+        generateQuizBtn.addEventListener('click', () => {
+            const quizData = [];
+            const questions = quizContainer.querySelectorAll('.question');
+            questions.forEach((questionElement, index) => {
+                const questionText = questionElement.querySelector(`input[name="question${index + 1}"]`).value;
+                const options = [];
+                const optionElements = questionElement.querySelectorAll('.option input[type="text"]');
+                optionElements.forEach(optionElement => {
+                    options.push(optionElement.value);
+                });
+                quizData.push({
+                    question: questionText,
+                    options: options
+                });
+            });
+            console.log(quizData);
+        });
+    </script>
+</body>
+
+</html>
