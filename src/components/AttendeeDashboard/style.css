@@ -1,3 +1,5 @@
+/* .....................................Header...Code.................................................... */
+
 *{
     margin: 0;
     padding: 0;
@@ -10,8 +12,6 @@
 }
 
 
-/* ........................................Header...CSS............................................. */
-/* .......................Copied...From...the...landing...page....css............................... */
 body{
     background-color: snow;
     overflow-x: hidden;
@@ -92,6 +92,14 @@ header{
     background-color: snow;
 }
 
+.search-bar{
+    color: #1D1E24;
+    width: 20vw;
+    border-radius: 10px;
+    padding: 0.75rem;
+    border: .125rem solid #faa31a;
+    outline: none;
+}
 
 @media only screen and (max-width: 768px){
     
@@ -112,7 +120,7 @@ header{
         display: flex;
         align-items: center;
     }
-
+    
     .mob-tablet-logo-header{
         display: inline;
         color: #1D1E24;
@@ -122,7 +130,7 @@ header{
     .mob-tablet-logo-header.active{
         display: none;
     }
-
+    
     .hamburger{
         display: block;
         cursor: pointer;
@@ -170,7 +178,7 @@ header{
         /* overflow: hidden; */
     }
 
-
+    
     .nav-bar.active{
         display: flex;
         flex-direction: column;
@@ -180,7 +188,7 @@ header{
         justify-content: flex-start;
         align-items: center;
     }
-
+    
     .nav-bar ul {
         display: block;
         width: fit-content;
@@ -200,7 +208,7 @@ header{
         /* background-color: aquamarine; */
         flex-direction: row;
     }
-
+    
     .nav-bar.active ul {
         flex-direction: column-reverse;
         opacity: 1;
@@ -208,7 +216,7 @@ header{
     .nav-bar.active ol {
         opacity: 1;
     }
-
+    
     .nav-bar ul li a {
         font-size: 2rem;
         color: snow;
@@ -221,132 +229,99 @@ header{
     }
 }
 
-/* ........................................Header...CSS............................................. */
+/* .....................................Header...Code.................................................... */
 
 
 
-
-
-
-
-
-
-/* ........................................Core...Style...Question............................................. */
-
-.quiz-container{
+/* .............................Box...Container...Code.................................................... */
+.card_collection{
     display: flex;
-    flex-direction: column;
+    /* justify-content: center; */
     align-items: center;
-    justify-content: center;
-    /* background-color: blueviolet; */
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
-.question {
+.card_sub_collection{
     display: flex;
+}
+
+
+
+
+
+main {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 90%;
     flex-direction: column;
-    align-items: start;
-    margin-bottom: 1.5rem;
-    padding: 2rem;
-    max-width: 65vw;
-    width: 65vw;
+    padding: 1em 0;
+    background-color: snow;
+}
+
+
+
+.heading{
+    text-align: center;
+    margin: 1em;
+    font-size: 3em;
+}
+
+
+img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.card_container{
+    width: 100%;
+    max-width: 256px;
+    background-color:#faa31a;
+    border-radius: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 1em 1em; 
+}
+
+.card_container_plus{
+    width: 100%;
+    max-width: 256px;
+    background-color:snow;
+    border-radius: 20px;
+    padding: 2rem 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 1em 1em; 
+}
+
+.card_heading{
+    color: snow;
+    padding: .75rem 0 .75rem;
+    text-align: center;
+    font-size: 1.25rem
     /* background-color: aqua; */
 }
 
-label{
-    font-size: 2rem;
-    font-weight: bold;
-    color: #1D1E24;
-    margin-bottom: 1vw;
-}
-
-.questionText{
-    color: #1D1E24;
-    height: 150px;
-    width: 60vw;
-    border-radius: 20px;
-    padding: 1rem;
-    border: .125rem solid #faa31a;
-    outline: none;
-    font-size: 1rem;
-    resize: none;
+.card_body{
+    padding: 0em .3em  2em .3em;
+    /* background-color: bisque; */
 }
 
 
-.options{
-    display: flex;
-    flex-direction: column;
+.card_container:hover{
+    transform: scale(1.125);
+    transition: 0.25s;
 }
 
-.option {
-    display: flex;
-    align-items: center;
-    margin: 1.5rem 0;
-}
-
-.optiontext{
-    color: #1D1E24;
-    width: 20vw;
-    border-radius: 10px;
-    padding: 0.75rem;
-    border: .125rem solid #faa31a;
-    outline: none;
-}
-
-.remove-option{
-    color: snow;
-    background-color: #faa31a;
-    width : 2vw;
-    height: 2vw;
-    font-size: 2vw;
-    text-align: center;
-    margin: 0 0.1rem;
-    border-radius: 100%;
-    box-shadow: 4px 4px 4px #1d1e243d ;
-}
-
-.add-option{
-    font-size: 1vw;
-    font-weight: bold;
-    background-color:#faa31a ;
-    color: snow;
-    border: none;
-    border-radius: 20px ;
-    box-shadow: 4px 4px 4px #1d1e243d ;
-    padding: 1rem 0;
-    /* max-width: 384px; */
-    max-width: 10vw;
-    margin-top: 1rem;
-    text-align: center;
-}
-
-.add-option:hover{
-    box-shadow: inset 4px 4px 4px #1d1e243d ;
-}
-
-.warper-add-question{
-    display: flex;
-    justify-content: center;
-}
-
-.add-question{
-    font-size: 2vw;
-    font-weight: bold;
-    background-color:#faa31a ;
-    color: snow;
-    border: none;
-    border-radius: 2vw ;
-    box-shadow: 4px 4px 4px #1d1e243d ;
-    padding: 3vw ;
-    /* max-width: 384px; */
-    max-width: 30vw;
-    margin: 2rem;
-    text-align: center;
+.card_container_plus:hover{
+    transform: scale(1.125);
+    transition: 0.25s;
 }
 
 
-.add-question:hover{
-    box-shadow: inset 4px 4px 4px #1d1e243d ;
-}
 
-/* ........................................Core...Style...Question............................................. */
+
+
+
+
+/* .............................Box...Container...Code.................................................... */
