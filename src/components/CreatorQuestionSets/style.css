@@ -234,12 +234,6 @@ header{
     flex-wrap: wrap;
 }
 
-.card_sub_collection{
-    display: flex;
-}
-
-
-
 
 
 main {
@@ -252,13 +246,6 @@ main {
     background-color: snow;
 }
 
-
-
-.heading{
-    text-align: center;
-    margin: 1em;
-    font-size: 3em;
-}
 
 
 img {
@@ -294,11 +281,6 @@ img {
     /* background-color: aqua; */
 }
 
-.card_body{
-    padding: 0em .3em  2em .3em;
-    /* background-color: bisque; */
-}
-
 
 .card_container:hover{
     transform: scale(1.125);
@@ -311,8 +293,16 @@ img {
 }
 
 
-
-
+@media only screen and (min-width: 768px){
+    .card_collection{
+        padding: 3vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
 
 
 

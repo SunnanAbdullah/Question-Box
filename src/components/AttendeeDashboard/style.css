@@ -101,6 +101,16 @@ header{
     outline: none;
 }
 
+.search-bar-mob{
+    display: none;
+}
+
+@media only screen and (max-width: 1366px){
+    .search-bar{
+        width: 30vw;
+    }
+}
+
 @media only screen and (max-width: 768px){
     
     header{
@@ -227,6 +237,18 @@ header{
         color: #faa31a;
         margin-bottom: 12px;
     }
+    .search-bar{
+        width: 50vw;
+    }
+    .search-bar-mob{
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 540px){
+    .search-bar{
+        width: 60vw;
+    }
 }
 
 /* .....................................Header...Code.................................................... */
@@ -242,11 +264,6 @@ header{
     flex-wrap: wrap;
 }
 
-.card_sub_collection{
-    display: flex;
-}
-
-
 
 
 
@@ -260,13 +277,6 @@ main {
     background-color: snow;
 }
 
-
-
-.heading{
-    text-align: center;
-    margin: 1em;
-    font-size: 3em;
-}
 
 
 img {
@@ -302,11 +312,6 @@ img {
     /* background-color: aqua; */
 }
 
-.card_body{
-    padding: 0em .3em  2em .3em;
-    /* background-color: bisque; */
-}
-
 
 .card_container:hover{
     transform: scale(1.125);
@@ -319,6 +324,17 @@ img {
 }
 
 
+
+@media only screen and (min-width: 768px){
+    .card_collection{
+        padding: 3vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
 
 
 
