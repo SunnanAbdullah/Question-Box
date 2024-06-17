@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/footer.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="./public/logo.png" alt="logo" class="logo">
+            <span class="mob-tablet-logo-header">Question Box</span>
+        </div>
+        <div class="hamburger">
+            <div class="linel1"></div>
+            <div class="linel2"></div>
+            <div class="linel3"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="#home" onclick="f()" class="active">Home</a></li>
+                <li><a href="#feature" onclick="f()">Feature</a></li>
+                <li><a href="#about" onclick="f()">About Us</a></li>
+            </ul>
+            <ol>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/signup">Signup</a></li>
+            </ol>
+        </nav>
+    </header>
+
+    <main>
+        <div id="home" class="home">
+            <div class="non-image">
+                <h1 class="header">Question Box</h1>
+                <p class="paragraph">Ditch paperwork, build engaging quizzes in minutes. Track progress, gain insights. Take quizzes anytime, anywhere, get instant feedback. Boost engagement and make assessments dynamic with our user-friendly platform.</p>
+                <a class="Explore" href="/signup">Let's Explore</a>
+            </div>
+            <img src="./public/logo.png" alt="logo" class="image">
+        </div>
+        
+        <section id="feature" class="feature">
+            <div class="feature-wraper">
+                <hr class="divider">
+                <div class="feature-container">
+                    <div class="feature-text">
+                        <h1 class="feature-text-header">Cross-Browser Compatible & Fully Responsive</h1>
+                        <p class="feature-text-body">Works anywhere, anytime!  Our app seamlessly adapts to any device and browser, so teachers can create quizzes and students can take them on desktops, laptops, tablets, or smartphones.  This flexibility ensures everyone can access and participate in assessments with ease.</p>
+                    </div>
+                    <img src="./public/portability.png" alt="Responsive" class="feature-image">
+                </div>
+            </div>
+                
+            <div class="feature-wraper">
+                <hr class="divider">
+                <div class="feature-container">
+                    <div class="feature-text">
+                        <h1 class="feature-text-header">Personalize Your Work</h1>
+                        <p class="feature-text-body">Users, unleash creativity!  Build personalized quizzes with various question types, images, and difficulty levels. Students, personalize your learning! Review results, focus on weak areas, and track progress. Our app makes it engaging and effective for everyone.</p>
+                    </div>
+                    <img src="./public/PERSONALIZE_white_rounded.png" alt="Responsive" class="feature-image">
+                </div>
+            </div>
+                
+            <div class="feature-wraper">
+                <hr class="divider">
+                <div class="feature-container">
+                    <div class="feature-text">
+                        <h1 class="feature-text-header">Digital Assessment</h1>
+                        <p class="feature-text-body">Say goodbye to grading fatigue! Our app automates digital assessments, eliminating paper piles and freeing teachers from tedious grading. This innovative tool empowers them to focus what truly matters: fostering a love of learning through engaging quizzes and instant feedback for students.</p>
+                    </div>
+                    <img src="./public/assessment_without_box_2.png" alt="Responsive" class="feature-image">
+                </div>
+            </div>
+                
+            <div class="feature-wraper">
+                <hr class="divider">
+                <div class="feature-container">
+                    <div class="feature-text">
+                        <h1 class="feature-text-header">Instant Feedback</h1>
+                        <p class="feature-text-body">Forget the wait! Our app provides instant feedback on quizzes. Students see their results right away, allowing them to solidify their understanding and identify areas for improvement. This real-time feedback loop keeps them engaged and motivated throughout the learning process.</p>
+                    </div>
+                    <img src="./public/feedback.png" alt="Responsive" class="feature-image">
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+        <section id="about" class="about">
+            <div class="bg-about">
+                <h1 class="about-header">WHO ARE WE ?</h1>
+                <p class="about-paragraph">We're a team of passionate educators and tech enthusiasts united by a belief in the power of engaging assessments.  We created this app to revolutionize the way educators teach and students learn.</p>
+                <h1 class="about-header">Ous Mission</h1>
+                <p class="about-paragraph">Our mission is to ignite a passion for learning through engaging, personalized assessments. We empower educators to create dynamic quizzes and students to embrace immediate feedback, fostering a dynamic learning experience that unlocks individual potential.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-question-box">
+            <img src="./public/logo.png" alt="logo">
+            <div class="footer-question-box-text-wrapper">
+                <h1>Question Box</h1>
+                <p>&copy; Copyright 2024 Question Box. All rights reserved</p>
+            </div>
+        </div>
+        <hr class="footer-divider">
+        <div class="footer-company">
+            <h1>Company</h1>
+            <div>About us</div>
+            <div>Privacy Policy</div>
+            <div>Terms & Conditions of Service</div>
+        </div>
+        <hr class="footer-divider">
+        <div class="footer-contact-us">
+            <h1>Contact Us</h1>
+            <div>Twitter</div>
+            <div>Fackbook</div>
+            <div>questionbox@gmail.com</div>
+        </div>
+    </footer>
+
+    <script>
+        let hamburger_state = false;
+        let hamburger = document.querySelector(".hamburger");
+        hamburger.onclick = function (){
+            hamburger_state = !hamburger_state ;
+            let hamburger_position = document.querySelector(".hamburger");
+            hamburger_position.classList.toggle("active");
+            let navBar = document.querySelector(".nav-bar");
+            navBar.classList.toggle("active"); 
+            let line1 = document.querySelector(".hamburger .linel1");
+            line1.classList.toggle("active");
+            let line2 = document.querySelector(".hamburger .linel2");
+            line2.classList.toggle("active");
+            let line3 = document.querySelector(".hamburger .linel3");
+            line3.classList.toggle("active");
+            let body = document.querySelector("body");
+            body.classList.toggle("active");
+            let logo = document.querySelector("header .logo");
+            logo.classList.toggle("active");
+            let main = document.querySelector("main");
+            main.classList.toggle("active");
+            let mob_tablet_logo_header = document.querySelector(".mob-tablet-logo-header");
+            mob_tablet_logo_header.classList.toggle("active");
+            let footer_logo = document.querySelector(".footer-question-box img");
+            footer_logo.classList.toggle("active");
+            console.log(hamburger_state);
+        }
+        
+        function f (){
+            console.log(` burger state in f : ${hamburger_state}`);
+            console.log("f run");
+            if(hamburger_state){
+                console.log(` burger state in active f : ${hamburger_state}`);
+                console.log("f run and activate");
+                hamburger_state = !hamburger_state ;
+            let hamburger_position = document.querySelector(".hamburger");
+            hamburger_position.classList.toggle("active");
+            let navBar = document.querySelector(".nav-bar");
+            navBar.classList.toggle("active"); 
+            let line1 = document.querySelector(".hamburger .linel1");
+            line1.classList.toggle("active");
+            let line2 = document.querySelector(".hamburger .linel2");
+            line2.classList.toggle("active");
+            let line3 = document.querySelector(".hamburger .linel3");
+            line3.classList.toggle("active");
+            let body = document.querySelector("body");
+            body.classList.toggle("active");
+            let logo = document.querySelector("header .logo");
+            logo.classList.toggle("active");
+            let main = document.querySelector("main");
+            main.classList.toggle("active");
+            let mob_tablet_logo_header = document.querySelector(".mob-tablet-logo-header");
+            mob_tablet_logo_header.classList.toggle("active");
+            let footer_logo = document.querySelector(".footer-question-box img");
+            footer_logo.classList.toggle("active");
+            }
+        }
+        
+    </script>
+</body>
+</html>

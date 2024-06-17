@@ -1,0 +1,84 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    color: #1D1E24;
+    scroll-behavior: smooth;
+}
+
+
+/* ........................................Core...Style...Question............................................. */
+
+.quiz-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* background-color: blueviolet; */
+}
+
+.question {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-bottom: 1.5rem;
+    padding: 2rem;
+    max-width: 65vw;
+    width: 65vw;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* background-color: aqua; */
+}
+
+.label{
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1D1E24;
+    margin-bottom: 1vw;
+}
+
+.questionText{
+    color: #1D1E24;
+    height: 150px;
+    width: 60vw;
+    border-radius: 20px;
+    padding: 1rem;
+    border: .125rem solid #faa31a;
+    outline: none;
+    font-size: 1rem;
+    resize: none;
+}
+
+
+.options{
+    display: flex;
+    flex-direction: column;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+}
+
+.option_radio_button{
+    opacity: 0;
+}
+
+.option_text{
+    color: #1D1E24;
+    width: 20vw;
+    border-radius: 10px;
+    padding: 0.75rem;
+    border: .125rem solid #faa31a;
+    outline: none;
+}
+
+.option_radio_button:checked + .option_text {
+    background-color: #faa31a;
+    color: snow;
+  }
+
+/* ........................................Core...Style...Question............................................. */

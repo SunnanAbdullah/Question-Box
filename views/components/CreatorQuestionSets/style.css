@@ -1,0 +1,309 @@
+/* .....................................Header...Code.................................................... */
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    color: #1D1E24;
+    scroll-behavior: smooth;
+}
+
+
+body{
+    background-color: snow;
+    overflow-x: hidden;
+    /* transition: 1s; */
+}
+
+header{
+    /* background-color: #0082e6; */
+    margin-top: 1rem;
+    height: 5rem;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    padding: 0 1.5rem;
+}
+
+.logo{
+    max-height: 80px;
+    max-width: 80px;
+    z-index: 10;
+}
+
+.mob-tablet-logo-header{
+    display: none;
+}
+
+.hamburger{
+    display: none;
+}
+.nav-bar{
+    display: flex;
+    width: 100vw;
+    justify-content: space-between;
+    margin-right: 1rem;
+}
+
+.nav-bar ul{
+    display: flex;
+}
+
+.nav-bar ol{
+    display: flex;
+}
+
+
+.nav-bar ul li a {
+    display: block;
+    font-size: 2vw;
+    font-weight: bold;
+    padding: .5rem 1rem;
+    border-radius: 50px;
+    /* transition: 0.5s; */
+    margin: 0 .25rem;
+}
+
+.nav-bar ol li a {
+    display: block;
+    color: snow;
+    background-color: #faa31a;
+    font-size: 1.5rem;
+    padding: .5rem 1.5rem;
+    font-weight: bold;
+    border-radius: 1rem;
+    margin: 0 .5rem;
+    box-shadow: 4px 4px 4px #1d1e243d ;
+    /* transition: 0.5s; */
+}
+
+
+.nav-bar ol li a:hover {
+    box-shadow:inset 4px 4px 4px #1d1e243d ;
+}
+
+.nav-bar ul li a:hover {
+    color: #faa31a;
+    background-color: snow;
+}
+
+
+@media only screen and (max-width: 768px){
+    
+    header{
+        justify-content: space-between;
+    }
+    body.active{
+        background-color: #faa31a;
+        /* transition: 1s; */
+    }
+    header.active{
+        flex-direction: row-reverse;
+    }
+    header .logo.active{
+        visibility: hidden;
+    }
+    .logo-container{
+        display: flex;
+        align-items: center;
+    }
+    
+    .mob-tablet-logo-header{
+        display: inline;
+        color: #1D1E24;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .mob-tablet-logo-header.active{
+        display: none;
+    }
+    
+    .hamburger{
+        display: block;
+        cursor: pointer;
+    }
+    .hamburger .linel1{
+        width: 2rem;
+        height: .25rem;
+        background-color: #faa31a;
+        margin: .5rem 1rem 0 .5rem;
+        border-radius: 20px;
+    }
+    .hamburger .linel2{
+        width: 2rem;
+        height: .25rem;
+        background-color: #faa31a;
+        margin: .5rem 1rem 0 .5rem;
+        border-radius: 20px;
+    }
+    .hamburger .linel3{
+        width: 2rem;
+        height: .25rem;
+        background-color: #faa31a;
+        margin: .5rem 1rem 0 .5rem;
+        border-radius: 20px;
+    }
+    .hamburger .linel1.active {
+        background-color: snow;
+    }
+    .hamburger .linel2.active {
+        background-color: snow;
+    }
+    .hamburger .linel3.active {
+        background-color: snow;
+    }
+    .nav-bar{
+        display: none;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        height: 0;
+        background-color: snow;
+        /* transition: 1s ; */
+        /* overflow: hidden; */
+    }
+
+    
+    .nav-bar.active{
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        /* background-color: #faa31a; */
+        background-color: #faa31a;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    
+    .nav-bar ul {
+        display: block;
+        width: fit-content;
+        margin: 80px 0 0 0;
+        text-align: center;
+        /* transition: .5s; */
+        opacity: 0;
+        /* background-color: aqua; */
+    }
+    .nav-bar ol {
+        display: flex;
+        width: fit-content;
+        margin: .5rem 0 0 0;
+        text-align: center;
+        /* transition: .5s; */
+        opacity: 0;
+        /* background-color: aquamarine; */
+        flex-direction: row;
+    }
+    
+    .nav-bar.active ul {
+        flex-direction: column-reverse;
+        opacity: 1;
+    }
+    .nav-bar.active ol {
+        opacity: 1;
+    }
+    
+    .nav-bar ul li a {
+        font-size: 2rem;
+        color: snow;
+        margin-bottom: 12px;
+    }
+    .nav-bar ol li a {
+        background-color: snow;
+        color: #faa31a;
+        margin-bottom: 12px;
+    }
+}
+
+/* .....................................Header...Code.................................................... */
+
+
+
+/* .............................Box...Container...Code.................................................... */
+.card_collection{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+
+
+main {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 90%;
+    flex-direction: column;
+    padding: 1em 0;
+    background-color: snow;
+}
+
+
+
+img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.card_container{
+    width: 100%;
+    max-width: 256px;
+    background-color:#faa31a;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 1em 1em; 
+}
+
+.card_container_plus{
+    width: 100%;
+    max-width: 256px;
+    background-color:snow;
+    border-radius: 20px;
+    padding: 2rem 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 1em 1em; 
+}
+
+.card_heading{
+    color: snow;
+    padding: .75rem 0 .75rem;
+    text-align: center;
+    font-size: 1.25rem
+    /* background-color: aqua; */
+}
+
+
+.card_container:hover{
+    transform: scale(1.125);
+    transition: 0.25s;
+}
+
+.card_container_plus:hover{
+    transform: scale(1.125);
+    transition: 0.25s;
+}
+
+
+@media only screen and (min-width: 768px){
+    .card_collection{
+        padding: 3vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
+
+
+
+/* .............................Box...Container...Code.................................................... */
