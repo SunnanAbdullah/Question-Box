@@ -54,6 +54,18 @@ button:hover{
     box-shadow:inset 4px 4px 4px #1d1e243d ;
 }
 
+.radio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.radio input{
+    width: auto;
+}
+.radio label {
+    font-weight: bold;
+}
+
 h1{
     white-space: nowrap;
 }

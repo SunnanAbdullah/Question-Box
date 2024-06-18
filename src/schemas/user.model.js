@@ -18,6 +18,10 @@ const  userSchema = new Schema(
         lowercase: true,
         trim: true
     },
+    role:{
+        type:Boolean, // True for Creator and False for Attendee
+        required: true
+    },
     avatar: {
         type: String, // Image
     },
@@ -30,3 +34,5 @@ const  userSchema = new Schema(
     timestamps: true
 }
 )
+
+export const User = mongoose.model("User",userSchema);

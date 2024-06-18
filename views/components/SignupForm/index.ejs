@@ -7,13 +7,17 @@
     <link rel="stylesheet" href="/components/SignupForm/style.css">
 </head>
 <body>
-    <form action="">
+    <form action="/signup" method="post">
         <div class="bg">
             <h1>Sign up</h1>
-            <input type="text" placeholder="Username">
-            <input type="email" placeholder="Email">
-            <input type="password" placeholder="Set Password">
-            <input type="password" placeholder="New Password">
+            <input type="text" placeholder="Username" name="username" >
+            <input type="email" placeholder="Email" name="email">
+            <input type="password" placeholder="New Password" name="password">
+            <input type="password" placeholder="Confirm Password" name="confirm_password">
+            <div class="radio">
+                <input type="radio" name="role" value="Creator" required><label for="">Creator</label>
+                <input type="radio" name="role" value="Attendee"required><label for="">Attendee</label>
+            </div>
             <button>Sign up</button>
         </div>
     </form>
