@@ -6,7 +6,7 @@ import { User }  from "./schemas/user.model.js";
 import { QuestionSet } from "./schemas/questionSet.model.js";
 import { Questions } from "./schemas/questions.model.js";
 import expressSession from 'express-session';
-
+import _ from 'lodash';
 
 
 const app = express();
@@ -142,9 +142,11 @@ app.get('/:id/set', async (req,res) => {
     console.log("session:",req.session.uid)
     req.session.uid = req.session.uid 
     const uid = {id:req.session.uid}
+    const o_id = req.query.product;
     const questionSet = await QuestionSet.find({ owner_id: req.query.product });
+    const data  = { questionSet,o_id}
     // console.log(questionSet)
-    return res.render('components/CreatorQuestionSets/index.ejs',{questionSet})
+    return res.render('components/CreatorQuestionSets/index.ejs',{data})
 })
 
 app.post('/set', async (req,res) => {
@@ -153,8 +155,8 @@ app.post('/set', async (req,res) => {
 
 app.post('/createquestion', async(req,res) => {
     try {
-        const Userid = req.query.owner_id
-        const newQuestionSet = await new QuestionSet({owner_id:req.query.owner_id,QuestionSetName:"Default Quiz"}) 
+        const Userid = req.query?.owner_id
+        const newQuestionSet = await new QuestionSet({owner_id:req.query?.owner_id,QuestionSetName:"Default Quiz"}) 
         newQuestionSet.save()
         if(newQuestionSet){
             return res.redirect(`${Userid}/set?product=${encodeURIComponent(Userid)}`)
@@ -171,8 +173,8 @@ app.get('/question', async (req, res) => {
     req.session.uid = req.session.uid
     const owner_id = req.query.owner_id 
     const set_id = req.query.Set_id 
-    console.log("question - get - owner:",owner_id)
-    console.log("question - get - Set_id:",set_id)
+    // console.log("question - get - owner:",owner_id)
+    // console.log("question - get - Set_id:",set_id)
     // console.log("question - get - session:",req.session.uid)
     const d = await QuestionSet.findById(set_id);
     const QuestionSetName = d.QuestionSetName;
@@ -184,8 +186,8 @@ app.get('/question', async (req, res) => {
 
 
 app.post('/question', async(req, res) => {
-    console.log("question - post - session:",req.session.uid)
-    console.log('Received data:', req.body);
+    // console.log("question - post - session:",req.session.uid)
+    // console.log('Received data:', req.body);
     // const Question = new Questions({Question})
 
     const setname = req.query?.setname
@@ -195,6 +197,8 @@ app.post('/question', async(req, res) => {
     console.log("seeeeeet",set_id)
     console.log("owneeeeeeeeeeeer",owner_id)
     const questions = req.body;
+
+
 
     (async () => {
       try {
@@ -209,20 +213,32 @@ app.post('/question', async(req, res) => {
           }
         }
 
+        const existingQuestionID = await existingSetName.ChildQuestionID
+        console.log(existingQuestionID[0])
+        let counter = -1
+
         for (const questionData of questions) {
+          counter++
           // Find the existing question by set_id and Question text
-          const existingQuestion = await Questions.findOne({
-            set_id: questionData.set_id,
-            Question: questionData.question
-          });
-    
+          const existingQuestion = await Questions.findById(
+            existingQuestionID[counter]
+          );
+          console.log(existingQuestion) 
           if (existingQuestion) {
             // Check if the question text or options have changed
             const hasChanges = (
-              existingQuestion.Question !== questionData.question ||
+              existingQuestion.Question != questionData.question ||
               !arraysEqual(existingQuestion.options, questionData.options)
             );
-    
+            console.log("New Question type: ",typeof questionData.question)
+            console.log("Existing Question type: ",typeof existingQuestion.Question)
+            console.log("New Question: ", questionData.question)
+            console.log("Existing Question: ",existingQuestion.Question)
+            console.log("New OPtion: ",questionData.options)
+            console.log("Existing OPtion: ",existingQuestion.options)
+            console.log("Question Change",(existingQuestion.Question !== questionData.question))
+            console.log("Option Change",(!arraysEqual(existingQuestion.options, questionData.options)))
+            console.log(hasChanges)
             if (hasChanges) {
               // Update the existing question
               existingQuestion.Question = questionData.question;
@@ -232,14 +248,18 @@ app.post('/question', async(req, res) => {
             } else {
               console.log(`Question "${questionData.question}" is already up-to-date.`);
             }
-          } else {
+          } 
+          else {
             // Create a new question if it doesn't exist
             const newQuestion = new Questions({
               Question: questionData.question,
               options: questionData.options,
               set_id: questionData.set_id,
             });
-    
+            
+            const existingSet = await QuestionSet.findById(set_id);
+            existingSet.ChildQuestionID.push(newQuestion._id);
+            await existingSet.save()
             await newQuestion.save();
             console.log(`Question "${questionData.question}" saved successfully!`);
           }

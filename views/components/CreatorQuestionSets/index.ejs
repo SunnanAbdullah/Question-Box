@@ -31,17 +31,17 @@
 
     <main>
         <div class="card_collection">
-            <% for (let Set of questionSet){ %>
-            <a href="/question?owner_id=<%= Set.owner_id %>&Set_id=<%= Set._id %>"  class="card_container">
+            <% for (let Set of data.questionSet){ %>
+            <a href="/question?owner_id=<%= Set?.owner_id %>&Set_id=<%= Set?._id %>"  class="card_container">
                 <div>
                     <img src="../../public/cover3.png" alt="man">
-                    <h2 class="card_heading"><%= Set.QuestionSetName %></h2>
+                    <h2 class="card_heading"><%= Set?.QuestionSetName %></h2>
                 </div>
             </a>
             <% } %>
         </div>
 
-        <form class="card_container_plus" method="post" action="/createquestion?owner_id=<%= questionSet[0].owner_id %>">
+        <form class="card_container_plus" method="post" action="/createquestion?owner_id=<%= data?.o_id %>">
             <button>
                 <img src="../../public/plus-icon.png" alt="man">
             </button>

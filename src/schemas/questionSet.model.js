@@ -12,6 +12,9 @@ const  QuestionSetSchema = new Schema(
         type:String, //Decide Who is the owner of this Question Set
         required: true
     },
+    ChildQuestionID:{
+        type:Array
+    },
     coverimage: {
         type: String, // Image
     },
