@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import { name, render } from "ejs";
 import { User }  from "./schemas/user.model.js";
 import { QuestionSet } from "./schemas/questionSet.model.js";
+import { Questions } from "./schemas/questions.model.js";
 import expressSession from 'express-session';
 
 
@@ -166,22 +167,90 @@ app.post('/createquestion', async(req,res) => {
 
 app.use(express.static('views/components/Questions'))
 // userid/question/setid
-app.get('/question', (req, res) => {
+app.get('/question', async (req, res) => {
     req.session.uid = req.session.uid
     const owner_id = req.query.owner_id 
     const set_id = req.query.Set_id 
-    const data_id = {owner_id,set_id}
     console.log("question - get - owner:",owner_id)
     console.log("question - get - Set_id:",set_id)
     console.log("question - get - session:",req.session.uid)
-    return res.render("components/Questions/index.ejs",{data_id})
+    const d = await QuestionSet.findById(set_id);
+    const QuestionSetName = d.QuestionSetName;
+    const questions = await Questions.find({set_id:set_id});
+    // console.log("quessssssssssssssssstions:",questions)
+    const data1 = {owner_id,set_id, QuestionSetName,questions}
+    return res.render("components/Questions/index.ejs",{data1})
 });
 
 
-app.post('/question', (req, res) => {
+app.post('/question', async(req, res) => {
     console.log("question - post - session:",req.session.uid)
-    console.log('Received data:', req.body[1]);
+    console.log('Received data:', req.body);
+    // const Question = new Questions({Question})
+
+    const set_id = req.query.set_id
+    const owner_id = req.query.owner_id
+
+    console.log("seeeeeet",set_id)
+    console.log("owneeeeeeeeeeeer",owner_id)
+    const questions = req.body;
+
+    (async () => {
+      try {
+        for (const questionData of questions) {
+          // Find the existing question by set_id and Question text
+          const existingQuestion = await Questions.findOne({
+            set_id: questionData.set_id,
+            Question: questionData.question
+          });
+    
+          if (existingQuestion) {
+            // Check if the question text or options have changed
+            const hasChanges = (
+              existingQuestion.Question !== questionData.question ||
+              !arraysEqual(existingQuestion.options, questionData.options)
+            );
+    
+            if (hasChanges) {
+              // Update the existing question
+              existingQuestion.Question = questionData.question;
+              existingQuestion.options = questionData.options;
+              await existingQuestion.save();
+              console.log(`Question "${questionData.question}" updated successfully!`);
+            } else {
+              console.log(`Question "${questionData.question}" is already up-to-date.`);
+            }
+          } else {
+            // Create a new question if it doesn't exist
+            const newQuestion = new Questions({
+              Question: questionData.question,
+              options: questionData.options,
+              set_id: questionData.set_id,
+            });
+    
+            await newQuestion.save();
+            console.log(`Question "${questionData.question}" saved successfully!`);
+          }
+        }
+      } catch (error) {
+        console.error('Error saving questions:', error);
+      }
+    })();
+    
+    // Helper function to compare two arrays for equality
+    function arraysEqual(arr1, arr2) {
+      if (arr1.length !== arr2.length) return false;
+      for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) return false;
+      }
+      return true;
+    }
+    
+    
+
+
     // Process the data or store it in the database as needed
+    return res.redirect(`/question?owner_id=${owner_id}&Set_id=${set_id}`)
     return res.json({ message: 'Data received successfully', data: req.body });
 });
 

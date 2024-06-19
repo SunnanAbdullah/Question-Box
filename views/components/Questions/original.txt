@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<.................................Following...Code...Is...Original...Code...Of...Index.ejs...for...Questions................................>
+
+
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,6 +13,7 @@
 </head>
 
 <body>
+
     <header>
         <div class="logo-container">
             <img src="../../public/logo.png" alt="logo" class="logo">
@@ -35,56 +40,68 @@
             <label>Set Name:</label><input type="text" value="<%= data1.QuestionSetName %>" style="font-size: 36px;">
             <button id="publish" class="add-question" onclick="sendData()">Publish</button>
         </div>
-        <% let questionCounter = 1; %>
-        <% for (let question of data1.questions) { %>
+        <% for (let question of data1.questions){ %>
             <div class="question">
-                <label for="question<%= questionCounter %>">Question <%= questionCounter %>:</label>
-                <textarea id="question<%= questionCounter %>" class="questionText" name="question<%= questionCounter %>" placeholder="How you doing?" ><%= question.Question %></textarea>
+                <label for="question1">Question 1:</label>
+                <textarea type="text" id="question1" class="questionText" name="question1" placeholder="How you doing?" ><%= question.Question %></textarea>
                 <div class="options">
-                    <% let optionCounter = 1; %>
-                    <% for (let option of question.options) { %>
-                        <div class="option">
-                            <input type="text" class="optiontext" name="option<%= questionCounter %>-<%= optionCounter %>" placeholder="Option <%= optionCounter %>" value="<%= option %>">
-                            <button class="remove-option" disabled>-</button>
-                        </div>
-                        <% optionCounter++; %>
-                    <% } %>
-                    <button class="add-option">Add option</button>
+                <% for (let option of question.options){ %>
+                <div class="option">
+                    <input type="text" class="optiontext" name="option1" placeholder="Option 1" value="<%= option %>">
+                    <button class="remove-option" disabled>-</button>
                 </div>
+                <% } %>
+                <button class="add-option">Add option</button>
             </div>
-            <% questionCounter++; %>
+        </div>
         <% } %>
+        <!-- <div class="question">
+            
+            <label for="question1">Question 1:</label>
+            <textarea type="text" id="question1" class="questionText" name="question1" placeholder="How you doing ?"></textarea>
+            <div class="options">
+                <div class="option">
+                    <input type="text" class="optiontext" name="option1" placeholder="Option 1">
+                    <button class="remove-option" disabled>-</button>
+                </div>
+                <div class="option">
+                    <input type="text" class="optiontext" name="option2" placeholder="Option 2">
+                    <button class="remove-option" disabled>-</button>
+                </div>
+                <button class="add-option">Add option</button>
+            </div>
+        </div> -->
     </div>
     <div class="warper-add-question">
         <button id="add-question" class="add-question">Add Question</button>
     </div>
-    <button id="generate-quiz">Generate Quiz</button>
+    <button id="generate-quiz" >Generate Quiz</button>
 
     <script>
         const addQuestionBtn = document.getElementById('add-question');
         const generateQuizBtn = document.getElementById('generate-quiz');
         const quizContainer = document.getElementById('quiz-container');
-        let questionCounter = <%= data1.questions.length %>;
+        let questionCounter = 1;
 
         addQuestionBtn.addEventListener('click', () => {
             questionCounter++;
             const newQuestion = document.createElement('div');
             newQuestion.classList.add('question');
             newQuestion.innerHTML = `
-                <label for="question${questionCounter}">Question ${questionCounter}:</label>
-                <textarea id="question${questionCounter}" class="questionText" name="question${questionCounter}" placeholder="How you doing?"></textarea>
-                <div class="options">
-                    <div class="option">
-                        <input type="text" class="optiontext" name="option${questionCounter}-1" placeholder="Option 1">
-                        <button class="remove-option" disabled>-</button>
-                    </div>
-                    <div class="option">
-                        <input type="text" class="optiontext" name="option${questionCounter}-2" placeholder="Option 2">
-                        <button class="remove-option" disabled>-</button>
-                    </div>
-                    <button class="add-option">Add option</button>
+            <label for="question${questionCounter}">Question ${questionCounter}:</label>
+            <textarea type="text" id="question${questionCounter}" class="questionText" name="question${questionCounter}" placeholder="How you doing ?"></textarea>
+            <div class="options">
+                <div class="option">
+                    <input type="text" class="optiontext" name="option1" placeholder="Option 1">
+                    <button class="remove-option" disabled>-</button>
                 </div>
-            `;
+                <div class="option">
+                    <input type="text" class="optiontext" name="option2" placeholder="Option 2">
+                    <button class="remove-option" disabled>-</button>
+                </div>
+                <button class="add-option">Add option</button>
+            </div>
+        `;
             quizContainer.appendChild(newQuestion);
         });
 
@@ -95,9 +112,9 @@
                 const newOption = document.createElement('div');
                 newOption.classList.add('option');
                 newOption.innerHTML = `
-                    <input type="text" class="optiontext" name="option${questionCounter}-${optionCounter}" placeholder="Option ${optionCounter}">
-                    <button class="remove-option">-</button>
-                `;
+                <input type="text" class="optiontext" name="option${optionCounter}" placeholder="Option ${optionCounter}">
+                <button class="remove-option">-</button>
+            `;
                 optionsContainer.insertBefore(newOption, event.target);
                 checkOptionButtons(optionsContainer);
             } else if (event.target.classList.contains('remove-option')) {
@@ -120,11 +137,10 @@
 
         generateQuizBtn.addEventListener('click', () => {
             const id = <%- JSON.stringify(data1.set_id) %>;
-            const owner_id = <%- JSON.stringify(data1.owner_id) %>;
             const quizData = [];
             const questions = quizContainer.querySelectorAll('.question');
             questions.forEach((questionElement, index) => {
-                const questionText = questionElement.querySelector(`textarea[id="question${index + 1}"]`).value;
+                const questionText = questionElement.querySelector(`textarea[name="question${index + 1}"]`).value;
                 const options = [];
                 const optionElements = questionElement.querySelectorAll('.option input[type="text"]');
                 optionElements.forEach(optionElement => {
@@ -133,18 +149,20 @@
                 quizData.push({
                     question: questionText,
                     options: options,
-                    set_id: id
+                    set_id:id
                 });
             });
             console.log(quizData);
 
-            fetch(`/question?set_id=${id}&owner_id=${owner_id}`, {
+
+            fetch(`/question?set_id=${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(quizData)
             })
+            .then(response => response.json())
             .then(quizData => {
                 console.log('Success:', quizData);
             })
@@ -154,6 +172,7 @@
         });
 
         function sendData() {
+
             fetch('/submit-data', {
                 method: 'POST',
                 headers: {
@@ -171,4 +190,6 @@
         }
     </script>
 </body>
-</html>
+
+</html> -->
+
