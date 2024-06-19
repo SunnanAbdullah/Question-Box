@@ -241,6 +241,12 @@ header{
     /* background-color: blueviolet; */
 }
 
+.question-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .question {
     display: flex;
     flex-direction: column;

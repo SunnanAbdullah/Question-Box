@@ -271,6 +271,9 @@ img {
     padding: 2rem 1rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin: 1em 1em; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .card_heading{
@@ -292,6 +295,10 @@ img {
     transition: 0.25s;
 }
 
+button{
+    border: none;
+    background-color: snow;
+}
 
 @media only screen and (min-width: 768px){
     .card_collection{
