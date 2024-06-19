@@ -32,7 +32,7 @@
     </header>
     <div id="quiz-container" class="quiz-container">
         <div class="question-header">
-            <label>Set Name:</label><input type="text" value="<%= data1.QuestionSetName %>" style="font-size: 36px;">
+            <label>Set Name:</label><input type="text" id="setname" value="<%= data1.QuestionSetName %>" style="font-size: 36px;">
             <button id="publish" class="add-question" onclick="sendData()">Publish</button>
         </div>
         <% let questionCounter = 1; %>
@@ -137,8 +137,9 @@
                 });
             });
             console.log(quizData);
-
-            fetch(`/question?set_id=${id}&owner_id=${owner_id}`, {
+            const setname = document.getElementById('setname');
+            
+            fetch(`/question?set_id=${id}&owner_id=${owner_id}&setname=${setname.value}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

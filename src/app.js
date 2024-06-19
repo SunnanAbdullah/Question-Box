@@ -173,7 +173,7 @@ app.get('/question', async (req, res) => {
     const set_id = req.query.Set_id 
     console.log("question - get - owner:",owner_id)
     console.log("question - get - Set_id:",set_id)
-    console.log("question - get - session:",req.session.uid)
+    // console.log("question - get - session:",req.session.uid)
     const d = await QuestionSet.findById(set_id);
     const QuestionSetName = d.QuestionSetName;
     const questions = await Questions.find({set_id:set_id});
@@ -188,6 +188,7 @@ app.post('/question', async(req, res) => {
     console.log('Received data:', req.body);
     // const Question = new Questions({Question})
 
+    const setname = req.query?.setname
     const set_id = req.query.set_id
     const owner_id = req.query.owner_id
 
@@ -197,6 +198,17 @@ app.post('/question', async(req, res) => {
 
     (async () => {
       try {
+        const existingSetName = await QuestionSet.findById(set_id);
+        if (existingSetName) {
+          if (existingSetName.QuestionSetName !== setname) {
+            existingSetName.QuestionSetName = setname;
+            await existingSetName.save();
+            console.log(`Set name updated to "${setname}"`);
+          } else {
+            console.log('Set name is already up-to-date.');
+          }
+        }
+
         for (const questionData of questions) {
           // Find the existing question by set_id and Question text
           const existingQuestion = await Questions.findOne({
