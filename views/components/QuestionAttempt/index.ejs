@@ -16,7 +16,7 @@
             <div class="options">
                 <% for (let j = 0; j < data1.questions[i].options.length; j++) { %>
                 <label class="option">
-                    <input type="radio" class="option_radio_button" name="question<%= i %>" value="<%= data1.questions[i].options[j] %>">
+                    <input type="radio" class="option_radio_button" name="question<%= i %>" value="<%= data1.questions[i].options[j] %>" required>
                     <span class="option_text"><%= data1.questions[i].options[j] %></span>
                 </label>
                 <% } %>
@@ -28,6 +28,9 @@
         </div>
     </div>
     <script>
+        const id = <%- JSON.stringify(data1.set_id) %>;
+        const owner_id = <%- JSON.stringify(data1.owner_id) %>;
+        const attendee_id = <%- JSON.stringify(data1.attendee_id) %>;
         document.getElementById('submit-btn').addEventListener('click', () => {
         const questions = document.querySelectorAll('.question');
         const data = [];
@@ -47,7 +50,7 @@
 
             
         
-            fetch('/submit-quiz',{
+            fetch(`/submit-quiz?owner_id=${owner_id}&set_id=${id}&attendee_id=${attendee_id}`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

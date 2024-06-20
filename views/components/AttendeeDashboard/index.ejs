@@ -25,7 +25,7 @@
                 <li><input class="search-bar" type="search" placeholder="Search"></li>
             </ul>
             <ol>
-                <li><a href="">Logout</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ol>
         </nav>
     </header>
@@ -36,7 +36,7 @@
         </section>
         <div class="card_collection">
             <% for (let Set of data.questionSet){ %>
-            <a href="/questionattempt?owner_id=<%= Set?.owner_id %>&Set_id=<%= Set?._id %>" class="card_container">
+            <a href="/questionattempt?owner_id=<%= Set?.owner_id %>&Set_id=<%= Set?._id %>&attendee_id=<%= data?.o_id %>" class="card_container">
                 <div>
                     <img src="../../public/cover3.png" alt="man">
                     <h2 class="card_heading"><%= Set?.QuestionSetName %></h2>

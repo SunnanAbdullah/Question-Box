@@ -44,6 +44,10 @@ app.get('/', async(req,res)=>{
     // res.send({status:201})
 })
 
+app.get('/logout',async(req,res) => {
+  res.redirect('/')
+})
+
 app.get('/login', async(req,res)=>{
     res.render("components/LoginForm/index.ejs")
     // res.send({status:200})
@@ -319,6 +323,7 @@ app.get('/questionattempt', async (req,res) => {
   req.session.uid = req.session.uid
   const owner_id = req.query.owner_id 
   const set_id = req.query.Set_id 
+  const attendee_id = req.query.attendee_id
   // console.log("question - get - owner:",owner_id)
   // console.log("question - get - Set_id:",set_id)
   // console.log("question - get - session:",req.session.uid)
@@ -328,12 +333,19 @@ app.get('/questionattempt', async (req,res) => {
   const CreatorName = user?.username.toUpperCase()
   const questions = await Questions.find({set_id:set_id});
   // console.log("quessssssssssssssssstions:",questions)
-  const data1 = {owner_id,set_id, QuestionSetName,questions,CreatorName}
+  const data1 = {owner_id,set_id,attendee_id ,QuestionSetName,questions,CreatorName}
   return res.render("components/QuestionAttempt/index.ejs",{data1})
 })
 
 app.post('/submit-quiz', (req, res) => {
   const submittedAnswers = req.body;
+  console.log(submittedAnswers);
+  const owner_id = req.query.owner_id // Creator ID
+  const set_id = req.query.set_id
+  const attendee_id = req.query.attendee_id
+  console.log("Owner ID SUBMITTED: ",owner_id);
+  console.log("Set ID SUBMITTED: ",set_id);
+  console.log("Attendee ID SUBMITTED: ",attendee_id);
   console.log(submittedAnswers);
 
   // Process the answers as needed
