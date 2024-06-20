@@ -76,11 +76,19 @@ app.post('/login', async (req, res) => {
 
     // Login successful (replace with your session management or token generation):
     console.log('User logged in successfully!'); // Placeholder for session or token
-    const Userid = user.id
-    req.session.uid = Userid
-    // const q = await new QuestionSet({owner_id:Userid,QuestionSetName:"Good"})
-    // await q.save()
-    return res.redirect(`${Userid}/set?product=${encodeURIComponent(Userid)}`)
+    if (user.role === true ){
+      const Userid = user.id
+      req.session.uid = Userid
+      // const q = await new QuestionSet({owner_id:Userid,QuestionSetName:"Good"})
+      // await q.save()
+      return res.redirect(`${Userid}/set?product=${encodeURIComponent(Userid)}`)
+    }else{
+      const Userid = user.id
+      req.session.uid = Userid
+      // const q = await new QuestionSet({owner_id:Userid,QuestionSetName:"Good"})
+      // await q.save()
+      return res.redirect(`${Userid}/attendee?product=${encodeURIComponent(Userid)}`)
+    }
   } catch (error) {
     console.error(error); // Log the error for debugging
     throw res.status(500).send({ message: 'Internal server error.' }); // Handle unexpected errors gracefully
@@ -120,6 +128,8 @@ app.post('/signup', async(req,res) => {
             if ( role === "Attendee" ){
                 const CreateUser = await new User({username,email,password,role:false})
                 CreateUser.save();
+                const Userid = CreateUser.id
+                return res.redirect(`${Userid}/attendee?product=${encodeURIComponent(Userid)}`)
                 return  res.send({status: 900, message:"sab sai ha Attendee bhai"})    
             }
             else if ( role === "Creator" ){
@@ -284,6 +294,46 @@ app.post('/question', async(req, res) => {
     // Process the data or store it in the database as needed
     return res.redirect(`/question?owner_id=${owner_id}&Set_id=${set_id}`)
     return res.json({ message: 'Data received successfully', data: req.body });
+});
+
+app.use(express.static('views/components/AttendeeDashboard'))
+app.get('/:id/attendee', async (req,res) => {
+  console.log("Attendee body:",req.query.product)
+  console.log("Attendee session:",req.session.uid)
+  req.session.uid = req.session.uid 
+  const uid = {id:req.session.uid}
+  const o_id = req.query.product;
+  const questionSet = await QuestionSet.find();
+  const data  = {questionSet,o_id}
+  // console.log(questionSet)
+  return res.render('components/AttendeeDashboard/index.ejs',{data})
+})
+
+app.get('/questionattempt', async (req,res) => {
+  req.session.uid = req.session.uid
+  const owner_id = req.query.owner_id 
+  const set_id = req.query.Set_id 
+  // console.log("question - get - owner:",owner_id)
+  // console.log("question - get - Set_id:",set_id)
+  // console.log("question - get - session:",req.session.uid)
+  const d = await QuestionSet.findById(set_id);
+  const QuestionSetName = d.QuestionSetName;
+  const user = await User.findById(d.owner_id);
+  const CreatorName = user?.username.toUpperCase()
+  const questions = await Questions.find({set_id:set_id});
+  // console.log("quessssssssssssssssstions:",questions)
+  const data1 = {owner_id,set_id, QuestionSetName,questions,CreatorName}
+  return res.render("components/QuestionAttempt/index.ejs",{data1})
+})
+
+app.post('/submit-quiz', (req, res) => {
+  const submittedAnswers = req.body;
+  console.log(submittedAnswers);
+
+  // Process the answers as needed
+  // For example, you could check the answers against correct answers and calculate a score
+
+  res.send({message:'Quiz submitted successfully!'});
 });
 
 

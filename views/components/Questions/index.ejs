@@ -64,7 +64,7 @@
         const addQuestionBtn = document.getElementById('add-question');
         const generateQuizBtn = document.getElementById('generate-quiz');
         const quizContainer = document.getElementById('quiz-container');
-        let questionCounter = <%= data1.questions.length %>;
+        let questionCounter = `<%= data1.questions.length %>`;
 
         addQuestionBtn.addEventListener('click', () => {
             questionCounter++;
@@ -119,8 +119,8 @@
         }
 
         generateQuizBtn.addEventListener('click', () => {
-            const id = <%- JSON.stringify(data1.set_id) %>;
-            const owner_id = <%- JSON.stringify(data1.owner_id) %>;
+            const id = `<%- JSON.stringify(data1.set_id) %>`;
+            const owner_id = `<%- JSON.stringify(data1.owner_id) %>`;
             const quizData = [];
             const questions = quizContainer.querySelectorAll('.question');
             questions.forEach((questionElement, index) => {

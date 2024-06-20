@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/components/QuestionAttempt/style.css">
+</head>
+<body>
+    <h1 style="text-align: center; margin: 2vw;">Test: <%= data1.QuestionSetName %> Designed By <%= data1.CreatorName %> </h1>
+    <div id="quiz-container" class="quiz-container">
+        <% for (let i = 0; i < data1.questions.length; i++) { %>
+        <div class="question" data-question="<%= data1.questions[i].Question %>">
+            <label for="question<%= i %>" class="label">Question <%= i + 1 %>:</label>
+            <div id="question<%= i %>" class="questionText"><%= data1.questions[i].Question %></div>
+            <div class="options">
+                <% for (let j = 0; j < data1.questions[i].options.length; j++) { %>
+                <label class="option">
+                    <input type="radio" class="option_radio_button" name="question<%= i %>" value="<%= data1.questions[i].options[j] %>">
+                    <span class="option_text"><%= data1.questions[i].options[j] %></span>
+                </label>
+                <% } %>
+            </div>
+        </div>
+        <% } %>
+        <div style="text-align: center; margin: 2vw;">
+            <button type="button" id="submit-btn">Submit</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('submit-btn').addEventListener('click', () => {
+        const questions = document.querySelectorAll('.question');
+        const data = [];
+
+            questions.forEach((question, index) => {
+                const questionElement = question.querySelector(`#question${index}`);  // Improved selector
+                const questionText = questionElement ? questionElement.textContent : ""; // Optional chaining for undefined prevention
+
+                const selectedOption = question.querySelector('input[type="radio"]:checked');
+                if (selectedOption) {
+                data.push({
+                    question: questionText,
+                    answer: selectedOption.value
+                });
+                }
+            });
+
+            
+        
+            fetch('/submit-quiz',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data })
+            })
+            .then(
+                alert("Quiz Submitted Successfully")
+            )
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        });
+    </script>
+</body>
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/components/QuestionAttempt/style.css">
+</head>
+<body>
+    <h1 style="text-align: center; margin: 2vw;">Test: <%= data1.QuestionSetName %> Designed By <%= data1.CreatorName %> </h1>
+    <div id="quiz-container" class="quiz-container">
+        <% for (let question of data1.questions) { %>
+        <div class="question">    
+            <label for="question1" class="label">Question 1:</label>
+            <div id="question1" class="questionText" ><%= question.Question %></div>
+            <div class="options">
+                <% for (let option of question.options) { %>
+                <label class="option">
+                    <input type="radio" class="option_radio_button" name="option">
+                    <span class="option_text"><%= option %></span>
+                </label>
+                <% } %>
+            </div>
+        </div>
+
+        <% } %>
+    </div>
+</body>
+</html> -->
