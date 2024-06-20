@@ -539,7 +539,6 @@ app.get('/CreatorAnalysisDashboard', async (req,res) => {
   return res.send({message:"a gy creator bhai analysis karna"})
 })
 
-// Assuming you have routes defined in your Express application
 
 // Route to fetch records for a specific creator
 app.get('/analysis', async (req, res) => {

@@ -55,22 +55,22 @@
       <tbody>
         <% for (let i = 0; i < record.Question.length; i++) { %>
           <tr>
-            <td><%= record.Question[i] %></td>
+            <td><%= record?.Question[i] %></td>
             <td>
-              <% record.allOptions[i].forEach(option => { %>
+              <% record?.allOptions[i].forEach(option => { %>
                 <div><%= option %></div>
               <% }); %>
             </td>
-            <td><%= record.submittedOptions[i] %></td>
-            <td><%= record.correctOption[i] %></td>
-            <td class="<%= record.submittedOptions[i] === record.correctOption[i] ? 'correct' : 'incorrect' %>">
-              <%= record.submittedOptions[i] === record.correctOption[i] ? 'Correct' : 'Incorrect' %>
+            <td><%= record?.submittedOptions[i] %></td>
+            <td><%= record?.correctOption[i] %></td>
+            <td class="<%= record?.submittedOptions[i] === record?.correctOption[i] ? 'correct' : 'incorrect' %>">
+              <%= record?.submittedOptions[i] === record?.correctOption[i] ? 'Correct' : 'Incorrect' %>
             </td>
           </tr>
         <% } %>
       </tbody>
     </table>
-    <p>Total Score: <%= record.score %> / <%= record.Question.length %></p>
+    <p>Total Score: <%= record?.score %> / <%= record?.Question.length %></p>
   <% }); %>
 
 </body>

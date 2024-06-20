@@ -13,33 +13,50 @@
         }
 
         table, th, td {
-            border: 1px solid black;
+            border: 2px solid snow;
             padding: 8px;
-            text-align: left;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color:#faa31a;
+            color: snow;
+            font-weight: bold;
+        }
+                /* Hover effect for table rows */
+        tbody tr {
+            background-color: snow; 
+            color: #faa31a;
+        }
+        tbody tr:hover {
+            transform: scale(1.05); /* Scale up by 5% */
+            background-color: #faa31a; /* Light gray background on hover */
+            color: snow;
+            cursor: pointer; /* Change cursor to pointer on hover */
+            transition: all 0.3s ease; 
+        }
+        tbody tr:not(:hover) {
+            transform: scale(1); /* Scale back to original size when not hovered */
+            transition: all 0.3s ease; 
         }
     </style>
 </head>
 
-<body>
-    <h1>Creator Records</h1>
+<body >
+    <h1 style="text-align: center;">Creator Records</h1>
     <table>
         <thead>
             <tr>
-                <th>Attendee Name</th>
-                <th>Score</th>
-                <th>Date Submitted</th>
+                <th style="text-align: center;">Attendee Name</th>
+                <th style="text-align: center;">Score</th>
+                <th style="text-align: center;">Date Submitted</th>
             </tr>
         </thead>
         <tbody>
             <% records.forEach(record => { %>
                 <tr>
-                    <td><%= record.attendee_name %></td>
-                    <td><%= record.score %></td>
-                    <td><%= new Date(record.createdAt).toLocaleString() %></td>
+                    <td  style="text-align: center;"><%= record?.attendee_name %></td>
+                    <td  style="text-align: center;"><%= record?.score %></td>
+                    <td  style="text-align: center;"><%= new Date(record?.createdAt).toLocaleString() %></td>
                 </tr>
             <% }); %>
         </tbody>
