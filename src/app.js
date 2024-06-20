@@ -480,7 +480,8 @@ app.post('/submit-quiz', async (req, res) => {
     console.log("Record saved:", record);
     console.log("Total Score:", score);
 
-    return res.status(200).send({ score: `Your Score is ${score}` });
+    return res.redirect(`${attendee_id}/attendee?product=${attendee_id}`)
+    // return res.status(200).send({ score: `Your Score is ${score}` });
   } catch (error) {
     console.error('Error processing quiz submission:', error);
     res.status(500).send({
@@ -529,6 +530,44 @@ app.get('/AttendeeFeedback', async (req, res) => {
   }
 });
 
+app.get('/CreatorAnalysisDashboard', async (req,res) => {
+  const o_id = req.query.product;
+  console.log("creeee",o_id)
+  const questionSet = await QuestionSet.find({ owner_id: req.query.product });
+  const data  = { questionSet,o_id}
+  return res.render('components/CreatorAnalysisDashboard/index.ejs',{data})
+  return res.send({message:"a gy creator bhai analysis karna"})
+})
+
+// Assuming you have routes defined in your Express application
+
+// Route to fetch records for a specific creator
+app.get('/analysis', async (req, res) => {
+  const creator_id = req.query.owner_id;
+  const set_id = req.query.Set_id;
+
+  try {
+    // Find all records where creator_id and set_id match
+    const records = await Record.find({ creator_id, set_id });
+
+    // Map through records to fetch attendee names
+    const recordsWithAttendeeNames = await Promise.all(records.map(async record => {
+      const attendee = await User.findById(record.attendee_id);
+      return {
+        ...record.toObject(),
+        attendee_name: attendee ? attendee.username : 'Unknown' // Assuming User model has a `name` field
+      };
+    }));
+
+    console.log(recordsWithAttendeeNames);
+
+    // Render the EJS file with the records data including attendee names
+    return res.render('components/Analysis/index.ejs', { records: recordsWithAttendeeNames });
+  } catch (error) {
+    console.error('Error fetching creator records:', error);
+    res.status(500).send({ message: 'An error occurred while fetching creator records.', error: error.message });
+  }
+});
 
 
 

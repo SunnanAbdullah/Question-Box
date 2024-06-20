@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/components/AttendeeDashboard/style.css">
+    <link rel="stylesheet" href="/components/CreatorQuestionSets/style.css">
 </head>
 <body>
     <header>
@@ -19,10 +19,7 @@
         </div>
         <nav class="nav-bar">
             <ul>
-                <li><a href="<%= data?.attendee_id %>/attendee?&product=<%= data?.attendee_id %>" onclick="f()" class="active">Home</a></li>
-            </ul>
-            <ul>
-                <li><input class="search-bar" type="search" placeholder="Search"></li>
+                <li><a href="<%= data?.o_id %>/set?product=<%= data?.o_id %>" onclick="f()">QuestionSet</a></li>
             </ul>
             <ol>
                 <li><a href="/logout">Logout</a></li>
@@ -31,23 +28,16 @@
     </header>
 
     <main>
-        <h1>This is Feedback</h1>
-        <section class="search-bar-mob">
-            <input class="search-bar" type="search" placeholder="Search">
-        </section>
         <div class="card_collection">
             <% for (let Set of data.questionSet){ %>
-            <a href="/AttendeeFeedback?owner_id=<%= Set?.owner_id %>&Set_id=<%= Set?._id %>&attendee_id=<%= data?.attendee_id %>" class="card_container">
+            <a href="/analysis?owner_id=<%= Set?.owner_id %>&Set_id=<%= Set?._id %>"  class="card_container">
                 <div>
                     <img src="../../public/cover3.png" alt="man">
                     <h2 class="card_heading"><%= Set?.QuestionSetName %></h2>
                 </div>
             </a>
             <% } %>
-
         </div>
-
-
     </main>
 
 </body>
