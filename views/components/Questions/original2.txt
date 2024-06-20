@@ -44,7 +44,6 @@
                     <% let optionCounter = 1; %>
                     <% for (let option of question.options) { %>
                         <div class="option">
-                            <input type="radio" class="correct-option" name="correct-option<%= questionCounter %>" value="<%= optionCounter %>" required>
                             <input type="text" class="optiontext" name="option<%= questionCounter %>-<%= optionCounter %>" placeholder="Option <%= optionCounter %>" value="<%= option %>">
                             <button class="remove-option" disabled>-</button>
                         </div>
@@ -65,7 +64,7 @@
         const addQuestionBtn = document.getElementById('add-question');
         const generateQuizBtn = document.getElementById('generate-quiz');
         const quizContainer = document.getElementById('quiz-container');
-        let questionCounter = parseInt(`<%= data1.questions.length %>`);
+        let questionCounter = `<%= data1.questions.length %>`;
 
         addQuestionBtn.addEventListener('click', () => {
             questionCounter++;
@@ -76,12 +75,10 @@
                 <textarea id="question${questionCounter}" class="questionText" name="question${questionCounter}" placeholder="How you doing?"></textarea>
                 <div class="options">
                     <div class="option">
-                        <input type="radio" class="correct-option" name="correct-option${questionCounter}" value="1">
                         <input type="text" class="optiontext" name="option${questionCounter}-1" placeholder="Option 1">
                         <button class="remove-option" disabled>-</button>
                     </div>
                     <div class="option">
-                        <input type="radio" class="correct-option" name="correct-option${questionCounter}" value="2">
                         <input type="text" class="optiontext" name="option${questionCounter}-2" placeholder="Option 2">
                         <button class="remove-option" disabled>-</button>
                     </div>
@@ -98,7 +95,6 @@
                 const newOption = document.createElement('div');
                 newOption.classList.add('option');
                 newOption.innerHTML = `
-                    <input type="radio" class="correct-option" name="correct-option${questionCounter}" value="${optionCounter}">
                     <input type="text" class="optiontext" name="option${questionCounter}-${optionCounter}" placeholder="Option ${optionCounter}">
                     <button class="remove-option">-</button>
                 `;
@@ -130,36 +126,28 @@
             questions.forEach((questionElement, index) => {
                 const questionText = questionElement.querySelector(`textarea[id="question${index + 1}"]`).value;
                 const options = [];
-                let correctOption = null;
-                const optionElements = questionElement.querySelectorAll('.option');
-                optionElements.forEach((optionElement, optionIndex) => {
-                    const optionText = optionElement.querySelector('input[type="text"]').value;
-                    const isCorrect = optionElement.querySelector('input[type="radio"]').checked;
-                    if (isCorrect) {
-                        correctOption = optionIndex + 1;
-                    }
-                    options.push(optionText);
+                const optionElements = questionElement.querySelectorAll('.option input[type="text"]');
+                optionElements.forEach(optionElement => {
+                    options.push(optionElement.value);
                 });
                 quizData.push({
                     question: questionText,
                     options: options,
-                    correctOption:options[correctOption-1] ,
                     set_id: id
                 });
             });
             console.log(quizData);
-            const setname = document.getElementById('setname').value;
+            const setname = document.getElementById('setname');
             
-            fetch(`/question?set_id=${id}&owner_id=${owner_id}&setname=${setname}`, {
+            fetch(`/question?set_id=${id}&owner_id=${owner_id}&setname=${setname.value}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(quizData)
             })
-            .then(data => {
-                console.log('Success:', data);
-                alert('Quiz submitted successfully!');
+            .then(quizData => {
+                console.log('Success:', quizData);
             })
             .catch((error) => {
                 console.error('Error:', error);

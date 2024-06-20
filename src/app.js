@@ -82,7 +82,7 @@ app.post('/login', async (req, res) => {
       // const q = await new QuestionSet({owner_id:Userid,QuestionSetName:"Good"})
       // await q.save()
       return res.redirect(`${Userid}/set?product=${encodeURIComponent(Userid)}`)
-    }else{
+    }else if (user.role === false){
       const Userid = user.id
       req.session.uid = Userid
       // const q = await new QuestionSet({owner_id:Userid,QuestionSetName:"Good"})
@@ -207,7 +207,7 @@ app.post('/question', async(req, res) => {
     console.log("seeeeeet",set_id)
     console.log("owneeeeeeeeeeeer",owner_id)
     const questions = req.body;
-
+    console.log(questions);
 
 
     (async () => {
@@ -238,7 +238,8 @@ app.post('/question', async(req, res) => {
             // Check if the question text or options have changed
             const hasChanges = (
               existingQuestion.Question != questionData.question ||
-              !arraysEqual(existingQuestion.options, questionData.options)
+              !arraysEqual(existingQuestion.options, questionData.options) ||
+              existingQuestion?.correctOption != questionData?.correctOption
             );
             console.log("New Question type: ",typeof questionData.question)
             console.log("Existing Question type: ",typeof existingQuestion.Question)
@@ -246,13 +247,17 @@ app.post('/question', async(req, res) => {
             console.log("Existing Question: ",existingQuestion.Question)
             console.log("New OPtion: ",questionData.options)
             console.log("Existing OPtion: ",existingQuestion.options)
+            console.log("New Correct OPtion: ",questionData.correctOption)
+            console.log("Existing Correct OPtion: ",existingQuestion.correctOption)
             console.log("Question Change",(existingQuestion.Question !== questionData.question))
             console.log("Option Change",(!arraysEqual(existingQuestion.options, questionData.options)))
+            console.log("Correct Option Change",existingQuestion?.correctOption != questionData?.correctOption)
             console.log(hasChanges)
             if (hasChanges) {
               // Update the existing question
               existingQuestion.Question = questionData.question;
               existingQuestion.options = questionData.options;
+              existingQuestion.correctOption = questionData.correctOption;
               await existingQuestion.save();
               console.log(`Question "${questionData.question}" updated successfully!`);
             } else {
@@ -265,6 +270,7 @@ app.post('/question', async(req, res) => {
               Question: questionData.question,
               options: questionData.options,
               set_id: questionData.set_id,
+              correctOption: questionData?.correctOption || "",
             });
             
             const existingSet = await QuestionSet.findById(set_id);

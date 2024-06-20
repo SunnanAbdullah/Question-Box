@@ -12,6 +12,9 @@ const  QuestionsSchema = new Schema(
         type:Array,
         required: true 
     },
+    correctOption:{
+        type:String
+    },
     set_id:{
         type:String, //Decide Who is the owner of this Question Set
         required: true
