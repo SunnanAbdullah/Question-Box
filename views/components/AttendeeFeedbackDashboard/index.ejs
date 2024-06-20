@@ -19,7 +19,7 @@
         </div>
         <nav class="nav-bar">
             <ul>
-                <li><a href="/attendeefeedbackdashboard?owner_id=<%= data?.owner_id %>&set_id=<%= data?.set_id %>&attendee_id=<%= data?.o_id %>" onclick="f()" class="active">Feedback</a></li>
+                <li><a href="<%= data?.attendee_id %>/attendee?&product=<%= data?.attendee_id %>" onclick="f()" class="active">Home</a></li>
             </ul>
             <ul>
                 <li><input class="search-bar" type="search" placeholder="Search"></li>
@@ -31,15 +31,18 @@
     </header>
 
     <main>
+        <h1>This is Feedback</h1>
         <section class="search-bar-mob">
             <input class="search-bar" type="search" placeholder="Search">
         </section>
         <div class="card_collection">
             <% for (let Set of data.questionSet){ %>
-            <a href="/questionattempt?owner_id=<%= Set?.owner_id %>&Set_id=<%= Set?._id %>&attendee_id=<%= data?.o_id %>" class="card_container">
+            <a href="/AttendeeFeedback?owner_id=<%= Set?.owner_id %>&Set_id=<%= Set?._id %>&attendee_id=<%= data?.attendee_id %>" class="card_container">
                 <div>
                     <img src="../../public/cover3.png" alt="man">
                     <h2 class="card_heading"><%= Set?.QuestionSetName %></h2>
+                    <h2 class="card_heading"><%= Set?.owner_id %></h2>
+                    <h2 class="card_heading"><%= Set?._id %></h2>
                 </div>
             </a>
             <% } %>

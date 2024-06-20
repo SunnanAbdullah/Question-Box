@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 18px;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .correct {
+      color: green;
+    }
+
+    .incorrect {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Quiz Results</h1>
+
+  <% records.forEach((record, index) => { %>
+    <h2>Attempt <%= index + 1 %></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>All Options</th>
+          <th>Submitted Option</th>
+          <th>Correct Option</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i = 0; i < record.Question.length; i++) { %>
+          <tr>
+            <td><%= record.Question[i] %></td>
+            <td>
+              <% record.allOptions[i].forEach(option => { %>
+                <div><%= option %></div>
+              <% }); %>
+            </td>
+            <td><%= record.submittedOptions[i] %></td>
+            <td><%= record.correctOption[i] %></td>
+            <td class="<%= record.submittedOptions[i] === record.correctOption[i] ? 'correct' : 'incorrect' %>">
+              <%= record.submittedOptions[i] === record.correctOption[i] ? 'Correct' : 'Incorrect' %>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <p>Total Score: <%= record.score %> / <%= record.Question.length %></p>
+  <% }); %>
+
+</body>
+
+</html>

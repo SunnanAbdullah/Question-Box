@@ -5,6 +5,7 @@ import { name, render } from "ejs";
 import { User }  from "./schemas/user.model.js";
 import { QuestionSet } from "./schemas/questionSet.model.js";
 import { Questions } from "./schemas/questions.model.js";
+import { Record } from "./schemas/record.model.js";
 import expressSession from 'express-session';
 import _ from 'lodash';
 
@@ -314,7 +315,9 @@ app.get('/:id/attendee', async (req,res) => {
   const uid = {id:req.session.uid}
   const o_id = req.query.product;
   const questionSet = await QuestionSet.find();
-  const data  = {questionSet,o_id}
+  const owner_id = questionSet[0].owner_id
+  const set_id = questionSet[0]._id
+  const data  = {questionSet,o_id,owner_id,set_id}
   // console.log(questionSet)
   return res.render('components/AttendeeDashboard/index.ejs',{data})
 })
@@ -337,22 +340,195 @@ app.get('/questionattempt', async (req,res) => {
   return res.render("components/QuestionAttempt/index.ejs",{data1})
 })
 
-app.post('/submit-quiz', (req, res) => {
-  const submittedAnswers = req.body;
-  console.log(submittedAnswers);
-  const owner_id = req.query.owner_id // Creator ID
-  const set_id = req.query.set_id
-  const attendee_id = req.query.attendee_id
-  console.log("Owner ID SUBMITTED: ",owner_id);
-  console.log("Set ID SUBMITTED: ",set_id);
-  console.log("Attendee ID SUBMITTED: ",attendee_id);
+// app.post('/submit-quiz', async (req, res) => {
+//   const submittedAnswers = req.body;
+//   console.log(submittedAnswers);
+//   const owner_id = req.query.owner_id // Creator ID
+//   const set_id = req.query.set_id
+//   const attendee_id = req.query.attendee_id
+//   console.log("Owner ID SUBMITTED: ",owner_id);
+//   console.log("Set ID SUBMITTED: ",set_id);
+//   console.log("Attendee ID SUBMITTED: ",attendee_id);
+//   console.log(submittedAnswers);
+//   const set = await QuestionSet.findById(set_id);
+//   const question_id = set.ChildQuestionID
+
+//   // Process the answers as needed
+//   // For example, you could check the answers against correct answers and calculate a score
+
+//   res.send({message:'Quiz submitted successfully!'});
+// });
+
+
+// app.post('/submit-quiz', async (req, res) => {
+//   const submittedAnswers = req.body.data;
+//   const owner_id = req.query.owner_id; // Creator ID
+//   const set_id = req.query.set_id;
+//   const attendee_id = req.query.attendee_id;
+
+//   console.log("Owner ID SUBMITTED: ", owner_id);
+//   console.log("Set ID SUBMITTED: ", set_id);
+//   console.log("Attendee ID SUBMITTED: ", attendee_id);
+//   console.log(submittedAnswers);
+
+//   try {
+//     const set = await QuestionSet.findById(set_id);
+//     const question_ids = set.ChildQuestionID;
+
+//     // Initialize an array to hold the results
+//     const results = [];
+
+//     for (const submittedAnswer of submittedAnswers) {
+//       const question = await Questions.findById(question_ids.shift());
+//       if (question) {
+//         const isCorrect = question.correctOption === submittedAnswer.answer;
+//         results.push({
+//           question: question.Question,
+//           allOption: question.options,
+//           submittedAnswer: submittedAnswer.answer,
+//           correctAnswer: question.correctOption,
+//           isCorrect: isCorrect
+//         });
+//       }
+//     }
+//     console.log("result:",results)
+
+//     // Optionally, you could store the results in the database, or process them further
+//     // For example, calculating a score:
+//     const score = results.filter(result => result.isCorrect).length;
+//     console.log("score:",score)
+//     // res.send({
+//     //   message: 'Quiz submitted successfully!',
+//     //   results: results,
+//     //   score: score
+//     // });
+
+//     const record = await new Record({
+//       Question:results.question,
+//       allOptions:results.allOption,
+//       submittedOptions:results.submittedAnswer,
+//       correctOption: results.correctAnswer,
+//       score:score,
+//       creator_id:owner_id,
+//       set_id:set_id,
+//       attendee_id:attendee_id,
+//     })
+//     record.save()
+//     return res.status(200).send({score:`Your Score is ${score}`});
+//   } catch (error) {
+//     console.error('Error processing quiz submission:', error);
+//     res.status(500).send({
+//       message: 'An error occurred while submitting the quiz.',
+//       error: error.message
+//     });
+//   }
+// });
+
+
+app.post('/submit-quiz', async (req, res) => {
+  const submittedAnswers = req.body.data;
+  const owner_id = req.query.owner_id; // Creator ID
+  const set_id = req.query.set_id;
+  const attendee_id = req.query.attendee_id;
+
+  console.log("Owner ID SUBMITTED: ", owner_id);
+  console.log("Set ID SUBMITTED: ", set_id);
+  console.log("Attendee ID SUBMITTED: ", attendee_id);
   console.log(submittedAnswers);
 
-  // Process the answers as needed
-  // For example, you could check the answers against correct answers and calculate a score
+  try {
+    const set = await QuestionSet.findById(set_id);
+    const question_ids = set.ChildQuestionID;
 
-  res.send({message:'Quiz submitted successfully!'});
+    // Initialize arrays to hold the record data
+    const questions = [];
+    const allOptions = [];
+    const submittedOptions = [];
+    const correctOptions = [];
+    let score = 0;
+
+    for (const submittedAnswer of submittedAnswers) {
+      const question = await Questions.findById(question_ids.shift());
+      if (question) {
+        const isCorrect = question.correctOption === submittedAnswer.answer;
+
+        questions.push(question.Question);
+        allOptions.push(question.options);
+        submittedOptions.push(submittedAnswer.answer);
+        correctOptions.push(question.correctOption);
+
+        if (isCorrect) {
+          score++;
+        }
+      }
+    }
+
+    // Create a single record document for all questions
+    const record = new Record({
+      Question: questions,
+      allOptions: allOptions,
+      submittedOptions: submittedOptions,
+      correctOption: correctOptions,
+      score: score,
+      creator_id: owner_id,
+      set_id: set_id,
+      attendee_id: attendee_id,
+    });
+
+    await record.save();
+
+    console.log("Record saved:", record);
+    console.log("Total Score:", score);
+
+    return res.status(200).send({ score: `Your Score is ${score}` });
+  } catch (error) {
+    console.error('Error processing quiz submission:', error);
+    res.status(500).send({
+      message: 'An error occurred while submitting the quiz.',
+      error: error.message
+    });
+  }
 });
+
+// app.get('/attendee', async(req,res) => {
+//   const Userid = req.query.product;
+//   console.log("Userid:",Userid)
+//   return res.redirect(`${Userid}/attendee?product=${encodeURIComponent(Userid)}`)  
+// })
+
+app.get('/attendeefeedbackdashboard', async(req,res) => {
+  const creator_id = req.query.owner_id;
+  const attendee_id = req.query.attendee_id;
+  const set_id = req.query.set_id;
+  console.log("Creator id: ",creator_id)
+  console.log("Attendee id: ",attendee_id)
+  console.log("Set id: ",set_id)
+  const questionSet = await QuestionSet.find();
+  const data = {attendee_id,set_id,creator_id,questionSet}
+  return res.render("components/AttendeeFeedbackDashboard/index.ejs",{data})
+  res.send({message:"a gya ha to javan ho kar"})
+})
+
+app.get('/AttendeeFeedback', async (req, res) => {
+  const attendee_id = req.query.attendee_id;
+  const set_id = req.query.Set_id;
+  console.log("attendee:", attendee_id);
+  console.log("set:", set_id);
+
+  try {
+    const records = await Record.find({  set_id: set_id });
+    console.log(records)
+    if (records.length === 0) {
+      return res.status(404).send({ message: 'No records found' });
+    }
+
+    res.render('components/AttendeeFeedback/index.ejs', { records });
+  } catch (error) {
+    console.error('Error fetching quiz results:', error);
+    res.status(500).send({ message: 'An error occurred while fetching the quiz results.', error: error.message });
+  }
+});
+
 
 
 
